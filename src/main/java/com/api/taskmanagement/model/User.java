@@ -1,5 +1,6 @@
 package com.api.taskmanagement.model;
 
+import com.api.taskmanagement.controller.dto.auth.RegisterUserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,9 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false, name = "ds_username")
     private String username;
 
+    @Column(unique = false, nullable = false, name = "ds_name")
+    private String name;
+
     @Column(nullable = false, name = "ds_password")
     private String password;
 
@@ -42,5 +46,11 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public User(RegisterUserDTO dto) {
+        this.name = dto.name();
+        this.password = dto.password();
+        this.username = dto.username();
     }
 }

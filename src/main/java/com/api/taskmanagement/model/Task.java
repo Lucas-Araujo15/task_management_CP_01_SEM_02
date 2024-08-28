@@ -1,10 +1,12 @@
 package com.api.taskmanagement.model;
 
+import com.api.taskmanagement.controller.dto.task.TaskRegisterDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 
@@ -39,4 +41,11 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "task_status_id")
     private TaskStatus taskStatus;
+
+    public Task(TaskRegisterDTO dto) {
+        this.title = dto.title();
+        this.createdAt = LocalDateTime.now();
+        this.description = dto.description();
+        this.deadline = dto.deadline();
+    }
 }

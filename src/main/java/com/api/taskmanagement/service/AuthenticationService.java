@@ -1,5 +1,8 @@
 package com.api.taskmanagement.service;
 
+import com.api.taskmanagement.controller.dto.auth.RegisterUserDTO;
+import com.api.taskmanagement.controller.dto.auth.RegisterUserListDTO;
+import com.api.taskmanagement.model.User;
 import com.api.taskmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,5 +22,12 @@ public class AuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByUsername(username);
+    }
+
+    public RegisterUserListDTO register(RegisterUserDTO dto) {
+        User user = new User(dto);
+        repository.save(user);
+
+        return new RegisterUserListDTO(user);
     }
 }

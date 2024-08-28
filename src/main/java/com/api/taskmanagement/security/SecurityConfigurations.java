@@ -20,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurations {
     private final SecurityFilter securityFilter;
 
+    private static final String[] WHITELIST = {"/swagger-ui/**", "/v3/api-docs/**", "api/auth/**"};
+
     @Autowired
     public SecurityConfigurations(SecurityFilter securityFilter) {
         this.securityFilter = securityFilter;
@@ -32,7 +34,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(req -> {
 //                    req.requestMatchers(HttpMethod.POST, "/login").permitAll();
 //                    req.requestMatchers(HttpMethod.POST, "auth/register").permitAll();
-                    req.requestMatchers("/swagger-ui/*").permitAll();
+                    req.requestMatchers(WHITELIST).permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
