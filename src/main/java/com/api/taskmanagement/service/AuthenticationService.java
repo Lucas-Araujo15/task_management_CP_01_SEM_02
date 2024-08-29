@@ -21,13 +21,12 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username);
-    }
+        UserDetails user = repository.findByUsername(username);
 
-    public RegisterUserListDTO register(RegisterUserDTO dto) {
-        User user = new User(dto);
-        repository.save(user);
+        if (user == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado");
+        }
 
-        return new RegisterUserListDTO(user);
+        return user;
     }
 }

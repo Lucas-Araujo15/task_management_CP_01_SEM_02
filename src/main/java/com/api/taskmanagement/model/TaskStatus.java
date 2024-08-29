@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "T_TM_TASK_STATUS")
 @AllArgsConstructor
@@ -21,9 +19,13 @@ public class TaskStatus {
     private Long id;
 
     @Column(name = "nm_status", nullable = false)
-    private Status nameStatus;
+    private String nameStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_status_id")
-    private List<Task> taskList;
+    @Column(name = "ds_keyword", nullable = false, unique = true)
+    private String keyword;
+
+    public TaskStatus(String nameStatus, String keyword) {
+        this.nameStatus = nameStatus;
+        this.keyword = keyword;
+    }
 }

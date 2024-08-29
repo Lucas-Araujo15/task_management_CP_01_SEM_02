@@ -5,8 +5,8 @@ import com.api.taskmanagement.controller.dto.auth.RegisterUserDTO;
 import com.api.taskmanagement.controller.dto.auth.RegisterUserListDTO;
 import com.api.taskmanagement.controller.dto.auth.TokenJwtDTO;
 import com.api.taskmanagement.model.User;
-import com.api.taskmanagement.service.AuthenticationService;
 import com.api.taskmanagement.service.TokenService;
+import com.api.taskmanagement.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +21,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("api/auth")
 public class AuthenticationController {
     private final AuthenticationManager manager;
-    private final AuthenticationService authService;
+    private final UserService userService;
     private final TokenService tokenService;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager manager, TokenService tokenService, AuthenticationService authService) {
+    public AuthenticationController(AuthenticationManager manager, TokenService tokenService, UserService userService) {
         this.manager = manager;
         this.tokenService = tokenService;
-        this.authService = authService;
+        this.userService = userService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<TokenJwtDTO> login(@RequestBody @Valid AuthenticationDataDTO dto) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.username(), dto.password());
         var authentication = manager.authenticate(token);
@@ -42,9 +42,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(new TokenJwtDTO(tokenJwt));
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<RegisterUserListDTO> register(@RequestBody @Valid RegisterUserDTO dto, UriComponentsBuilder uriBuilder) {
-        RegisterUserListDTO registeredUser = authService.register(dto);
+        RegisterUserListDTO registeredUser = userService.register(dto);
 
         URI uri = uriBuilder.path("/api/auth/login").buildAndExpand().toUri();
 

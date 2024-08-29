@@ -1,17 +1,17 @@
 package com.api.taskmanagement.model;
 
 public enum Status {
-    PENDING("Pendente"),
-    IN_PROGRESS("Em Andamento"),
-    FINISHED("Concluída");
+    PENDING("pending"),
+    IN_PROGRESS("in_progress"),
+    FINISHED("finished");
 
-    private final String name;
+    private final String keyword;
 
-    Status(String name) {
-        this.name = name;
+    Status(String keyword) {
+        this.keyword = keyword;
     }
 
-    private String getName() {
-        return this.name;
+    public String getKeyword() {
+        return this.keyword;
     }
 }

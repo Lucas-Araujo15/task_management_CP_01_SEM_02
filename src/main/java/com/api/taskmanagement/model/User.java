@@ -48,9 +48,9 @@ public class User implements UserDetails {
         return username;
     }
 
-    public User(RegisterUserDTO dto) {
-        this.name = dto.name();
-        this.password = dto.password();
-        this.username = dto.username();
+    public User(String username, String name, String password) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
     }
 }

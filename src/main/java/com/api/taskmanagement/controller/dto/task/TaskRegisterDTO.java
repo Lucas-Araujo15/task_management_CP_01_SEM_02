@@ -1,5 +1,6 @@
 package com.api.taskmanagement.controller.dto.task;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,9 +14,7 @@ public record TaskRegisterDTO(
         String description,
 
         @NotNull
-        LocalDateTime deadline,
-
-        @NotNull
-        Long taskStatusId
+        @Future
+        LocalDateTime deadline
 ) {
 }

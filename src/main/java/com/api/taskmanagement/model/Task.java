@@ -1,6 +1,7 @@
 package com.api.taskmanagement.model;
 
 import com.api.taskmanagement.controller.dto.task.TaskRegisterDTO;
+import com.api.taskmanagement.controller.dto.task.TaskUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,5 +48,19 @@ public class Task {
         this.createdAt = LocalDateTime.now();
         this.description = dto.description();
         this.deadline = dto.deadline();
+    }
+
+    public void updateInformation(TaskUpdateDTO dto) {
+        if (dto.deadline() != null) {
+            this.deadline = dto.deadline();
+        }
+
+        if (dto.title() != null) {
+            this.title = dto.title();
+        }
+
+        if (dto.description() != null) {
+            this.description = dto.description();
+        }
     }
 }

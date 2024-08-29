@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurations {
     private final SecurityFilter securityFilter;
 
-    private static final String[] WHITELIST = {"/swagger-ui/**", "/v3/api-docs/**", "api/auth/**"};
+    private static final String[] WHITELIST = {"/swagger-ui/**", "/v3/api-docs/**", "api/auth/**", "api/public/**"};
 
     @Autowired
     public SecurityConfigurations(SecurityFilter securityFilter) {
@@ -32,8 +32,6 @@ public class SecurityConfigurations {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-//                    req.requestMatchers(HttpMethod.POST, "/login").permitAll();
-//                    req.requestMatchers(HttpMethod.POST, "auth/register").permitAll();
                     req.requestMatchers(WHITELIST).permitAll();
                     req.anyRequest().authenticated();
                 })
@@ -50,4 +48,6 @@ public class SecurityConfigurations {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
+
 }

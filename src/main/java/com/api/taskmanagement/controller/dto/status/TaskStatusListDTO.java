@@ -4,7 +4,7 @@ import com.api.taskmanagement.model.Status;
 import com.api.taskmanagement.model.TaskStatus;
 
 public record TaskStatusListDTO(
-        Status nameStatus
+        String nameStatus
 ) {
     public TaskStatusListDTO(TaskStatus taskStatus) {
         this(taskStatus.getNameStatus());
