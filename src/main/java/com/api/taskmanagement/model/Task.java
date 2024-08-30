@@ -39,7 +39,7 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "task_status_id")
     private TaskStatus taskStatus;
 
